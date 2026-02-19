@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australia 2026 旅行計畫</title>
+<style>
+  :root {
+    --mel-primary: #0d7377;
+    --mel-light: #e0f5f5;
+    --mel-accent: #14a3a8;
+    --syd-primary: #2563eb;
+    --syd-light: #dbeafe;
+    --syd-accent: #3b82f6;
+    --booked: #f59e0b;
+    --booked-bg: #fef3c7;
+    --rest-primary: #6b7280;
+    --rest-light: #f3f4f6;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding-bottom: 4rem;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--mel-primary), var(--syd-primary));
+    color: white;
+    padding: 2rem 1rem 1.5rem;
+    text-align: center;
+  }
+  .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .hero p { opacity: 0.9; font-size: 0.9rem; }
+  .hero .dates { font-size: 0.85rem; opacity: 0.8; margin-top: 0.25rem; }
+  .hotel-bar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .hotel-tag {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    backdrop-filter: blur(4px);
+  }
+  nav {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 0;
+  }
+  nav a {
+    display: inline-block;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a:focus { color: var(--mel-primary); border-bottom-color: var(--mel-primary); }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 0.75rem; }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 1.25rem 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  /* Day Cards */
+  .day-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .day-card.mel .day-header { background: var(--mel-light); border-left: 4px solid var(--mel-primary); }
+  .day-card.syd .day-header { background: var(--syd-light); border-left: 4px solid var(--syd-primary); }
+  .day-card.rest .day-header { background: var(--rest-light); border-left: 4px solid var(--rest-primary); }
+  .day-header {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .day-header:active { opacity: 0.85; }
+  .day-num {
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .day-card.mel .day-num { color: var(--mel-primary); }
+  .day-card.syd .day-num { color: var(--syd-primary); }
+  .day-card.rest .day-num { color: var(--rest-primary); }
+  .day-title { font-weight: 600; font-size: 0.95rem; }
+  .day-date { font-size: 0.8rem; color: var(--text-light); }
+  .day-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .tag-mel { background: var(--mel-light); color: var(--mel-primary); }
+  .tag-syd { background: var(--syd-light); color: var(--syd-primary); }
+  .tag-hotel { background: #f3e8ff; color: #7c3aed; }
+  .tag-booked { background: var(--booked-bg); color: #b45309; }
+  .tag-cost { background: #dcfce7; color: #166534; }
+  .crowd-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; vertical-align: middle; }
+  .crowd-green { background: var(--green); }
+  .crowd-yellow { background: var(--yellow); }
+  .expand-icon {
+    font-size: 1.1rem;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+    color: var(--text-light);
+    margin-top: 0.1rem;
+  }
+  .day-card.open .expand-icon { transform: rotate(180deg); }
+  .day-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .day-card.open .day-body { max-height: 3000px; }
+  .day-content {
+    padding: 0.75rem 1rem 1rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+  .day-content ul { padding-left: 1.25rem; margin: 0.35rem 0; }
+  .day-content li { margin-bottom: 0.25rem; }
+  .day-content .note {
+    background: #fffbeb;
+    border-left: 3px solid var(--booked);
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+  }
+  .day-content h4 { margin: 0.75rem 0 0.35rem; font-size: 0.9rem; }
+  /* Day 2 Detail */
+  .timeline { margin-top: 0.5rem; }
+  .timeline-item {
+    position: relative;
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    border-left: 2px solid var(--mel-accent);
+  }
+  .timeline-item:last-child { border-left-color: transparent; }
+  .timeline-dot {
+    position: absolute;
+    left: -6px;
+    top: 0.85rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--mel-accent);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--mel-accent);
+  }
+  .timeline-time { font-weight: 700; font-size: 0.85rem; color: var(--mel-primary); }
+  .timeline-title { font-weight: 600; margin: 0.15rem 0; }
+  .timeline-desc { font-size: 0.85rem; color: var(--text-light); }
+  .timeline-desc ul { padding-left: 1rem; margin: 0.25rem 0; }
+  .timeline-tip {
+    font-size: 0.82rem;
+    color: var(--mel-primary);
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+  /* Comparison Tables */
+  .compare-section { margin-bottom: 1.5rem; }
+  .compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -0.75rem; padding: 0 0.75rem; }
+  .compare-table {
+    width: 100%;
+    min-width: 500px;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .compare-table th, .compare-table td {
+    padding: 0.5rem 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .compare-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    white-space: nowrap;
+  }
+  .compare-table thead th {
+    position: static;
+    text-align: center;
+  }
+  .compare-table td { text-align: center; }
+  .compare-table th:first-child { min-width: 120px; }
+  .col-booked { background: var(--booked-bg) !important; }
+  .col-rec { background: #ecfdf5 !important; }
+  .booked-badge {
+    display: inline-block;
+    background: var(--booked);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .rec-badge {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); }
+  .unknown { color: var(--text-light); font-size: 0.75rem; }
+  /* Cost Summary */
+  .cost-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    margin-bottom: 0.75rem;
+  }
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-total {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--mel-primary);
+    border-top: 2px solid var(--mel-primary);
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+  }
+  /* Tips */
+  .tip-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    margin-bottom: 0.75rem;
+  }
+  .tip-card h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .tip-card ul { padding-left: 1.25rem; font-size: 0.88rem; }
+  .tip-card li { margin-bottom: 0.3rem; }
+  /* back to top */
+  .back-top {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--mel-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 99;
+  }
+  .back-top.visible { opacity: 1; }
+  /* Link button style */
+  .link-btn {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--syd-primary);
+    text-decoration: none;
+    border: 1px solid var(--syd-primary);
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    margin-top: 0.25rem;
+  }
+  /* criteria list for sheet2 */
+  .criteria-list {
+    text-align: left;
+    margin: 0.5rem 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .criteria-list li {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.82rem;
+  }
+  .criteria-list li:last-child { border-bottom: none; }
+  .sub-note {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 0.3rem;
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.3rem; }
+    nav a { padding: 0.5rem 0.65rem; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero" id="top">
+  <h1>Australia 2026</h1>
+  <p>Melbourne + Sydney 11 天行程</p>
+  <div class="dates">2/20 (Fri) — 3/2 (Mon)</div>
+  <div class="hotel-bar">
+    <span class="hotel-tag">Melbourne: Marriott (6 晚)</span>
+    <span class="hotel-tag">Sydney: Four Seasons (3 晚)</span>
+  </div>
+</div>
+
+<nav>
+  <a href="#overview">行程總覽</a>
+  <a href="#day2">Day 2 攻略</a>
+  <a href="#compare">方案比較</a>
+  <a href="#cost">費用</a>
+  <a href="#tips">避人潮</a>
+</nav>
+
+<div class="container">
+
+  <!-- ===== 行程總覽 ===== -->
+  <div class="section-title" id="overview">行程總覽</div>
+
+  <!-- Day 1 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 1</div>
+        <div class="day-title">台北 → 墨爾本｜抵達日</div>
+        <div class="day-date">2/20 (Fri)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>中午／下午抵達墨爾本</li>
+        <li>入住飯店、放行李</li>
+        <li>附近隨意吃或外帶</li>
+      </ul>
+      <div class="note">今天的任務只有「好好抵達」，沒有任何進度壓力。</div>
+    </div></div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 2</div>
+        <div class="day-title">墨爾本市區｜週末避人潮慢遊日</div>
+        <div class="day-date">2/21 (Sat)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>早上：安靜咖啡（不排隊）</li>
+        <li>上午：Hosier Lane（早去早走）</li>
+        <li>中午：Yarra River 河岸午餐</li>
+        <li>下午：回飯店休息 或 NGV 選逛</li>
+        <li>傍晚：Royal Botanic Gardens</li>
+        <li>晚上：18:00 早吃晚餐</li>
+      </ul>
+      <div class="note">週六不跑景點，是為了讓後面幾天更好玩。<br><a href="#day2" style="font-size:0.85rem">→ 查看完整 Day 2 詳細攻略</a></div>
+    </div></div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 3</div>
+        <div class="day-title">Puffing Billy 蒸汽小火車＋動物</div>
+        <div class="day-date">2/22 (Sun)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+          <span class="tag tag-booked">已預訂</span>
+          <span class="tag tag-cost">NTD 7,431</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>早上：Puffing Billy Railway</li>
+        <li>中段：無尾熊／動物園行程</li>
+        <li>傍晚回市區</li>
+        <li>晚上：直接回飯店休息</li>
+      </ul>
+      <div class="note">今天比較累，但只累這一天就好。</div>
+      <p style="margin-top:0.5rem"><a class="link-btn" href="https://www.getyourguide.com/zh-tw/melbourne-l202/from-melbourne-puffing-billy-penguin-parade-combo-tour-t467972" target="_blank">查看已訂行程 (GetYourGuide)</a></p>
+    </div></div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 4</div>
+        <div class="day-title">墨爾本自由日（第一個空白日）</div>
+        <div class="day-date">2/23 (Mon)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <h4>行程（看心情）</h4>
+      <ul>
+        <li>睡到自然醒</li>
+        <li>小區域散步 / 咖啡 / 書店</li>
+        <li>或完全待在飯店</li>
+      </ul>
+      <div class="note">今天是「不用證明這趟旅程很充實」的一天。</div>
+    </div></div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 5</div>
+        <div class="day-title">酒莊品酒日（平日最舒服）</div>
+        <div class="day-date">2/24 (Tue)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+          <span class="tag tag-booked">已預訂</span>
+          <span class="tag tag-cost">NTD 5,600</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>早上出發（Yarra Valley 為主）</li>
+        <li>酒莊品酒＋午餐</li>
+        <li>下午返回墨爾本</li>
+        <li>晚上：清淡飲食／早休息</li>
+      </ul>
+      <h4>為什麼放這天？</h4>
+      <ul>
+        <li>平日人最少</li>
+        <li>前一天是看風景，今天是吃喝</li>
+        <li>不會卡到週末觀光團</li>
+      </ul>
+      <div class="note">這天放得非常漂亮</div>
+      <p style="margin-top:0.5rem"><a class="link-btn" href="https://www.klook.com/activity/176919-relaxed-half-day-yarra-valley-wine-tour-from-melbourne/" target="_blank">查看已訂行程 (Klook)</a></p>
+    </div></div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="day-card mel" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 6</div>
+        <div class="day-title">大洋路一日遊（重點日）</div>
+        <div class="day-date">2/25 (Wed)</div>
+        <div class="day-meta">
+          <span class="tag tag-mel">Melbourne</span>
+          <span class="tag tag-hotel">Marriott</span>
+          <span class="tag tag-booked">已預訂</span>
+          <span class="tag tag-cost">AUD 178 / NTD 4,000</span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>大洋路一日團（12 Apostles 等）</li>
+        <li>傍晚返回墨爾本</li>
+        <li>晚上：外帶或簡單吃</li>
+      </ul>
+      <div class="note">今天不用安排任何加碼行程。</div>
+      <p style="margin-top:0.5rem"><a class="link-btn" href="https://www.fittravel.com.au/tc/product/gor-chinese-benz/" target="_blank">查看已訂行程 (Fit Travel)</a></p>
+    </div></div>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="day-card syd" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 7</div>
+        <div class="day-title">墨爾本 → 雪梨（移動日）</div>
+        <div class="day-date">2/26 (Thu)</div>
+        <div class="day-meta">
+          <span class="tag tag-syd">Sydney</span>
+          <span class="tag tag-hotel">Four Seasons</span>
+          <span class="crowd-dot crowd-green" title="人少"></span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>早上飛雪梨</li>
+        <li>抵達後進飯店、輕鬆市區</li>
+        <li>下午：魚市場＋港灣散步</li>
+      </ul>
+      <div class="note">因為昨天是自由日，今天移動會很輕鬆。</div>
+    </div></div>
+  </div>
+
+  <!-- Day 8 -->
+  <div class="day-card syd" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 8</div>
+        <div class="day-title">QVB 血拼＋歌劇院＋The Rocks</div>
+        <div class="day-date">2/27 (Fri)</div>
+        <div class="day-meta">
+          <span class="tag tag-syd">Sydney</span>
+          <span class="tag tag-hotel">Four Seasons</span>
+          <span class="crowd-dot crowd-yellow" title="可控"></span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>上午先逛 QVB（一開門就去）</li>
+        <li>下午慢走歌劇院外觀、岩石區</li>
+        <li>海濱散步即可，不追夜景</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <!-- Day 9 -->
+  <div class="day-card syd" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 9</div>
+        <div class="day-title">Manly Beach 一日</div>
+        <div class="day-date">2/28 (Sat)</div>
+        <div class="day-meta">
+          <span class="tag tag-syd">Sydney</span>
+          <span class="tag tag-hotel">Four Seasons</span>
+          <span class="crowd-dot crowd-yellow" title="分散"></span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>早上搭渡輪</li>
+        <li>下午看海、散步</li>
+        <li>傍晚回市區，避開尖峰</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <!-- Day 10 -->
+  <div class="day-card rest" onclick="toggle(this)">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 10</div>
+        <div class="day-title">雪梨 → 台北</div>
+        <div class="day-date">3/1 (Sun)</div>
+        <div class="day-meta">
+          <span class="crowd-dot crowd-green" title="人少"></span>
+        </div>
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="day-body"><div class="day-content">
+      <ul><li>返台</li></ul>
+    </div></div>
+  </div>
+
+  <!-- Day 11 -->
+  <div class="day-card rest">
+    <div class="day-header">
+      <div>
+        <div class="day-num">DAY 11</div>
+        <div class="day-title">台灣休息</div>
+        <div class="day-date">3/2 (Mon)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Day 2 詳細攻略 ===== -->
+  <div class="section-title" id="day2">Day 2 詳細攻略</div>
+  <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:0.75rem;">2/21 (Sat)｜墨爾本市區（週末避人潮 × 慢火情侶版）</p>
+
+  <div class="tip-card" style="margin-bottom:1rem; border-left:3px solid var(--mel-primary);">
+    <h4>行程核心原則</h4>
+    <ul>
+      <li>不去市場、不逛大型購物中心</li>
+      <li>熱門點只在「早上 or 傍晚」</li>
+      <li>咖啡、散步、風景優先</li>
+      <li>行走距離短、節奏鬆</li>
+    </ul>
+  </div>
+
+  <div class="timeline">
+    <!-- 09:00 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">09:00 – 10:30</div>
+      <div class="timeline-title">靜靜的咖啡早晨（避開人潮關鍵）</div>
+      <div class="timeline-desc">
+        <p>區域：South Melbourne / CBD 邊緣</p>
+        <ul>
+          <li>週六 9–10 點是墨爾本最舒服的時段</li>
+          <li>網紅咖啡店 10:30 後才開始爆</li>
+          <li>在地烘豆咖啡，座位多、不排隊</li>
+          <li>可慢坐 45–60 分鐘</li>
+        </ul>
+        <div class="timeline-tip">「這段就是旅程正式開始的儀式感」</div>
+      </div>
+    </div>
+    <!-- 10:45 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">10:45 – 11:30</div>
+      <div class="timeline-title">Hosier Lane（只在這時間去）</div>
+      <div class="timeline-desc">
+        <p>Hosier Lane + AC/DC Lane</p>
+        <ul>
+          <li>11:30 後 = 觀光團＋拍照排隊</li>
+          <li>早上幾乎只有攝影師跟旅人</li>
+          <li>建議停留 20–30 分鐘</li>
+        </ul>
+        <div class="timeline-tip">「拍完就走，不戀戰」</div>
+      </div>
+    </div>
+    <!-- 11:45 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">11:45 – 13:15</div>
+      <div class="timeline-title">河岸慢走＋午餐</div>
+      <div class="timeline-desc">
+        <p>Yarra River（Southbank → Princes Bridge）</p>
+        <ul>
+          <li>不走 Crown 那一側（太多人）</li>
+          <li>走靠河、靠橋的路線</li>
+          <li>河岸但不在一線餐廳</li>
+          <li>可坐 60–90 分鐘</li>
+          <li>不吃熱門 brunch 名店</li>
+        </ul>
+        <div class="timeline-tip">「週六人潮高峰，但你在對的位置」</div>
+      </div>
+    </div>
+    <!-- 13:30 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">13:30 – 15:00</div>
+      <div class="timeline-title">選擇性休息段（超重要）</div>
+      <div class="timeline-desc">
+        <p><strong>A. 回飯店午睡 / 休息</strong></p>
+        <ul>
+          <li>避開 14–16 點最大人潮</li>
+          <li>對後面幾天行程幫助超大</li>
+        </ul>
+        <p style="margin-top:0.4rem"><strong>B. 國家美術館 NGV（只逛一區）</strong></p>
+        <ul>
+          <li>冷氣＋空間大</li>
+          <li>不用每區都看</li>
+        </ul>
+        <div class="timeline-tip">「這段是慢火行程的秘密武器」</div>
+      </div>
+    </div>
+    <!-- 16:00 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">16:00 – 17:30</div>
+      <div class="timeline-title">植物園散步</div>
+      <div class="timeline-desc">
+        <p>Royal Botanic Gardens</p>
+        <ul>
+          <li>旅行團已經走了，當地人也不多</li>
+          <li>不繞整圈，找草地坐著聊天</li>
+          <li>看湖＋樹影</li>
+        </ul>
+        <div class="timeline-tip">「很情侶感，而且不擠」</div>
+      </div>
+    </div>
+    <!-- 18:00 -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">18:00 – 20:00</div>
+      <div class="timeline-title">早一點吃晚餐（避開排隊）</div>
+      <div class="timeline-desc">
+        <ul>
+          <li>18:00–18:30 進餐廳</li>
+          <li>不吃 Google 4.6 分以上爆紅店</li>
+          <li>區域：Fitzroy 邊緣 / Carlton 非主幹道 / South Melbourne 小店</li>
+        </ul>
+        <div class="timeline-tip">「餐廳安靜、服務好、吃得慢」</div>
+      </div>
+    </div>
+    <!-- After -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-time">20:00+</div>
+      <div class="timeline-title">吃完之後</div>
+      <div class="timeline-desc">
+        <p>直接回飯店，或在街角小酒吧喝一杯（不跑夜店）</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-card" style="margin-top:1rem; border-left:3px solid var(--booked);">
+    <h4>為什麼這個 Day 2 很適合？</h4>
+    <ul>
+      <li>週六但幾乎不會感覺「擠」</li>
+      <li>沒有硬景點、沒有趕時間</li>
+      <li>為 Day 3–5 保留體力</li>
+      <li>情緒是放鬆的，不是刺激的</li>
+    </ul>
+  </div>
+
+  <!-- ===== 行程方案比較 ===== -->
+  <div class="section-title" id="compare">行程方案比較</div>
+
+  <!-- Day 3 Puffing Billy -->
+  <div class="compare-section">
+    <h3 style="font-size:1rem;margin-bottom:0.5rem;">Day 3 — Puffing Billy 蒸汽小火車＋動物</h3>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Option 1</th>
+            <th>Option 2</th>
+            <th class="col-booked">Option 3 <span class="booked-badge">已訂</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>平台</th>
+            <td>Klook</td>
+            <td>Klook</td>
+            <td class="col-booked">GetYourGuide</td>
+          </tr>
+          <tr>
+            <th>連結</th>
+            <td><a href="https://www.klook.com/zh-TW/activity/89560-puffing-billy-phillip-island-wildlife-day-tour-melbourne/" target="_blank" class="link-btn">查看</a></td>
+            <td><a href="https://www.klook.com/zh-TW/activity/135221-puffing-billy-penguin-parade-combo-tour-from-melbourne/" target="_blank" class="link-btn">查看</a></td>
+            <td class="col-booked"><a href="https://www.getyourguide.com/zh-tw/melbourne-l202/from-melbourne-puffing-billy-penguin-parade-combo-tour-t467972" target="_blank" class="link-btn">查看</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-card" style="margin-top:0.5rem">
+      <h4>選擇條件清單</h4>
+      <ul class="criteria-list">
+        <li>團體人數 10–16 人</li>
+        <li>火車安排位置：早上或午前</li>
+        <li>企鵝停留安排固定區、時間不趕</li>
+        <li>午餐：含餐或 45–60 分自由餐</li>
+        <li>交通：小型巴士 / 舒適座</li>
+        <li>停留時間：每站 ≥ 15–20 分</li>
+        <li>導遊評價：「不趕」「節奏舒服」</li>
+        <li>出／回程時間合理（不太早起、不回太晚）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Day 6 Great Ocean Road -->
+  <div class="compare-section">
+    <h3 style="font-size:1rem;margin-bottom:0.5rem;">Day 6 — 大洋路一日遊（重點日）</h3>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-booked">Opt 1 <span class="booked-badge">已訂</span></th>
+            <th>Opt 2</th>
+            <th>Opt 3</th>
+            <th>Opt 4</th>
+            <th class="col-rec">Opt 5 <span class="rec-badge">推薦</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>平台</th>
+            <td class="col-booked">Fit Travel</td>
+            <td>Fit Travel</td>
+            <td>Fit Travel</td>
+            <td>Klook</td>
+            <td class="col-rec">Klook</td>
+          </tr>
+          <tr>
+            <th>小型團<br>(&lt;15人)</th>
+            <td class="col-booked"><span class="check">&#10003;</span> 13人</td>
+            <td><span class="unknown">不確定</span></td>
+            <td><span class="unknown">不確定</span></td>
+            <td><span class="unknown">不確定</span></td>
+            <td class="col-rec"><span class="check">&#10003;</span> 15人</td>
+          </tr>
+          <tr>
+            <th>午餐<br>停留久</th>
+            <td class="col-booked"><span class="check">&#10003;</span> 90分</td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="unknown">不確定</span></td>
+            <td class="col-rec"><span class="unknown">不確定</span></td>
+          </tr>
+          <tr>
+            <th>十二門徒<br>+Loch Ard<br>+Gibson Steps</th>
+            <td class="col-booked"><span class="cross">無 Gibson Steps</span></td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="cross">無 Gibson Steps</span></td>
+            <td class="col-rec"><span class="cross">無 Gibson Steps</span></td>
+          </tr>
+          <tr>
+            <th>停留時間<br>&gt;15分</th>
+            <td class="col-booked"><span class="check">&#10003;</span></td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="check">&#10003;</span></td>
+            <td><span class="unknown">不確定</span></td>
+            <td class="col-rec"><span class="check">&#10003;</span></td>
+          </tr>
+          <tr>
+            <th>出發時間</th>
+            <td class="col-booked"><span class="check">&#10003;</span></td>
+            <td><span class="check">&#10003;</span> 10am</td>
+            <td>07:00</td>
+            <td>07:30</td>
+            <td class="col-rec">07:30</td>
+          </tr>
+          <tr>
+            <th>回程時間</th>
+            <td class="col-booked">7:30pm</td>
+            <td>10pm 後</td>
+            <td>13hrs</td>
+            <td>13hrs</td>
+            <td class="col-rec">13hrs</td>
+          </tr>
+          <tr>
+            <th>中文導遊</th>
+            <td class="col-booked"><span class="check">&#10003;</span></td>
+            <td><span class="cross">&#10007;</span></td>
+            <td>英文</td>
+            <td><span class="check">&#10003;</span></td>
+            <td class="col-rec"><span class="check">&#10003;</span></td>
+          </tr>
+          <tr>
+            <th>價格</th>
+            <td class="col-booked"><strong>AUD 89</strong></td>
+            <td>AUD 138</td>
+            <td>AUD 126</td>
+            <td>NTD 3,188</td>
+            <td class="col-rec"><strong>NTD 2,799</strong></td>
+          </tr>
+          <tr>
+            <th>備註</th>
+            <td class="col-booked">—</td>
+            <td>—</td>
+            <td>飯店接送</td>
+            <td>飯店接送</td>
+            <td class="col-rec">飯店接送<br>反向之旅</td>
+          </tr>
+          <tr>
+            <th>評價</th>
+            <td class="col-booked">—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>Klook 5星</td>
+            <td class="col-rec">Klook 5星<br>很多好評</td>
+          </tr>
+          <tr>
+            <th>連結</th>
+            <td class="col-booked"><a href="https://www.fittravel.com.au/tc/product/gor-chinese-benz/" target="_blank" class="link-btn">查看</a></td>
+            <td><a href="https://www.fittravel.com.au/tc/product/great-ocean-road-sunset/" target="_blank" class="link-btn">查看</a></td>
+            <td><a href="https://www.fittravel.com.au/tc/product/great-ocean-road-full-day-tour/" target="_blank" class="link-btn">查看</a></td>
+            <td><a href="https://www.klook.com/zh-TW/activity/149752-great-ocean-road-12-apostles-wild-day-from-melbourne-tour/" target="_blank" class="link-btn">查看</a></td>
+            <td class="col-rec"><a href="https://www.klook.com/zh-TW/activity/156183-great-ocean-road-12-apostles-full-day-tour-from-melbourne/" target="_blank" class="link-btn">查看</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sub-note" style="margin-top:0.5rem">
+      景點停留重點：十二門徒岩（至少 30 分）、Loch Ard Gorge（20–30 分）、其他沿途看海停靠（10–15 分）
+    </div>
+  </div>
+
+  <!-- Day 5 Winery -->
+  <div class="compare-section">
+    <h3 style="font-size:1rem;margin-bottom:0.5rem;">Day 5 — 酒莊品酒日</h3>
+    <div class="compare-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-booked">Option 1 <span class="booked-badge">已訂</span></th>
+            <th>Option 2</th>
+            <th>Option 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>平台</th>
+            <td class="col-booked">Klook</td>
+            <td>Klook</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <th>連結</th>
+            <td class="col-booked"><a href="https://www.klook.com/activity/176919-relaxed-half-day-yarra-valley-wine-tour-from-melbourne/" target="_blank" class="link-btn">查看</a></td>
+            <td><a href="https://www.klook.com/activity/141469-yarra-valley-afternoon-winery-tour/" target="_blank" class="link-btn">查看</a></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 費用摘要 ===== -->
+  <div class="section-title" id="cost">費用摘要</div>
+  <div class="cost-card">
+    <div class="cost-row">
+      <span>Day 3 — Puffing Billy 蒸汽小火車</span>
+      <span><strong>NTD 7,431</strong></span>
+    </div>
+    <div class="cost-row">
+      <span>Day 5 — 酒莊品酒 (Yarra Valley)</span>
+      <span><strong>NTD 5,600</strong></span>
+    </div>
+    <div class="cost-row">
+      <span>Day 6 — 大洋路一日遊</span>
+      <span><strong>NTD 4,000</strong><br><span style="font-size:0.8rem;color:var(--text-light)">AUD 178</span></span>
+    </div>
+    <div class="cost-row cost-total">
+      <span>已知行程費用合計</span>
+      <span>NTD 17,031</span>
+    </div>
+    <p class="sub-note" style="margin-top:0.5rem">* 不含機票、飯店、餐飲、交通等其他費用</p>
+  </div>
+
+  <!-- ===== 避人潮策略 ===== -->
+  <div class="section-title" id="tips">避人潮策略</div>
+
+  <div class="tip-card">
+    <h4>核心原則</h4>
+    <ul>
+      <li>熱門市區 → <strong>平日去</strong></li>
+      <li>海邊／渡輪 → <strong>週末去</strong></li>
+      <li>任何需要排隊的 → <strong>早上去</strong></li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <h4>整趟旅行的避人潮邏輯</h4>
+    <ul>
+      <li>市區全部排平日</li>
+      <li>六日都在自然／遠郊</li>
+      <li>重點景點避開尖峰時段</li>
+      <li>每天都留「坐下來聊天」的空白</li>
+    </ul>
+  </div>
+
+</div><!-- container -->
+
+<a href="#top" class="back-top" id="backTop" aria-label="回到頂部">↑</a>
+
+<script>
+function toggle(card) {
+  card.classList.toggle('open');
+}
+// back to top button
+window.addEventListener('scroll', function() {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
