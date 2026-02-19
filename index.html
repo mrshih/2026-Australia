@@ -285,6 +285,128 @@
   .tip-card h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
   .tip-card ul { padding-left: 1.25rem; font-size: 0.88rem; }
   .tip-card li { margin-bottom: 0.3rem; }
+  /* Flight Card */
+  .flight-card {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    padding: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+  .flight-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .flight-airline {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--syd-primary);
+  }
+  .flight-booking-ref {
+    background: var(--syd-primary);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .flight-route {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+  }
+  .flight-point {
+    text-align: center;
+  }
+  .flight-code {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .flight-time {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--syd-primary);
+  }
+  .flight-terminal {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 0.1rem;
+  }
+  .flight-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    color: var(--text-light);
+    font-size: 0.75rem;
+    min-width: 80px;
+  }
+  .flight-arrow-line {
+    width: 60px;
+    height: 1px;
+    background: var(--text-light);
+    position: relative;
+  }
+  .flight-arrow-line::after {
+    content: '✈';
+    position: absolute;
+    top: -9px;
+    right: -4px;
+    font-size: 0.9rem;
+    color: var(--syd-primary);
+  }
+  .flight-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    padding-top: 0.5rem;
+    border-top: 1px dashed #bae6fd;
+  }
+  .flight-details span { display: block; }
+  .flight-details strong { color: var(--text); font-weight: 600; }
+  .flight-pax {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #bae6fd;
+    font-size: 0.8rem;
+  }
+  .flight-pax-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 0;
+  }
+  .flight-pax-name { font-weight: 600; color: var(--text); }
+  .flight-pax-seat { color: var(--syd-primary); font-weight: 600; }
+  .flight-pax-bags { font-size: 0.75rem; color: var(--text-light); }
+  .flight-warn {
+    background: #fff7ed;
+    border-left: 3px solid #f97316;
+    padding: 0.4rem 0.65rem;
+    margin-top: 0.5rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.78rem;
+    color: #9a3412;
+  }
+  .flight-next-day {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.1rem 0.4rem;
+    border-radius: 8px;
+    margin-left: 0.25rem;
+    vertical-align: middle;
+  }
   /* back to top */
   .back-top {
     position: fixed;
@@ -335,9 +457,120 @@
     color: var(--text-light);
     margin-top: 0.3rem;
   }
+  .copy-code {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    font-family: monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    user-select: all;
+    -webkit-user-select: all;
+    transition: background 0.2s;
+  }
+  .copy-code:hover { background: #fde68a; }
+  .copy-code.copied { background: #bbf7d0; border-color: #22c55e; }
+  /* IPC Reference Card */
+  .ipc-card {
+    background: linear-gradient(135deg, #fefcf3, #fdf6e3);
+    border: 1px solid #e8dcc8;
+    border-radius: 10px;
+    padding: 0.85rem;
+    margin: 0.75rem 0;
+  }
+  .ipc-card-header {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #7c6a50;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px dashed #e8dcc8;
+  }
+  .ipc-card-header small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: #8b7355;
+    margin-top: 0.15rem;
+  }
+  .ipc-card h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #6b5b45;
+    margin: 0.65rem 0 0.3rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid #c4a97d;
+  }
+  .ipc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+  .ipc-grid .full { grid-column: 1 / -1; }
+  .ipc-field-label {
+    font-size: 0.7rem;
+    color: #8b7355;
+    margin-bottom: 0.1rem;
+  }
+  .ipc-field-value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    background: #fffef8;
+    border: 1px solid #e8dcc8;
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+  }
+  .ipc-field-value.placeholder {
+    color: #a89880;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .ipc-decl-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #f0e8d8;
+    font-size: 0.8rem;
+  }
+  .ipc-decl-item:last-child { border-bottom: none; }
+  .ipc-no {
+    background: #dcfce7;
+    color: #166534;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .ipc-person-note {
+    background: #f5efe3;
+    border: 1px dashed #d4c4a8;
+    border-radius: 6px;
+    padding: 0.45rem 0.75rem;
+    margin-top: 0.65rem;
+    font-size: 0.8rem;
+    color: #6b5b45;
+  }
+  .ipc-tips {
+    background: #f5efe3;
+    border-left: 3px solid #c4a97d;
+    border-radius: 0 6px 6px 0;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.65rem;
+  }
+  .ipc-tips h4 { margin-top: 0; border-left: none; padding-left: 0; }
+  .ipc-tips ul { padding-left: 1.1rem; font-size: 0.8rem; margin: 0; }
+  .ipc-tips li { margin-bottom: 0.2rem; }
   @media (max-width: 480px) {
     .hero h1 { font-size: 1.3rem; }
     nav a { padding: 0.5rem 0.65rem; font-size: 0.75rem; }
+    .ipc-grid { grid-template-columns: 1fr; }
+    .ipc-grid .full { grid-column: auto; }
   }
 </style>
 </head>
@@ -376,17 +609,112 @@
         <div class="day-meta">
           <span class="tag tag-mel">Melbourne</span>
           <span class="tag tag-hotel">Marriott</span>
+          <span class="tag tag-booked">已預訂</span>
         </div>
       </div>
       <span class="expand-icon">▼</span>
     </div>
     <div class="day-body"><div class="day-content">
+
+      <div class="flight-card">
+        <div class="flight-card-header">
+          <span class="flight-airline">China Airlines CI 57</span>
+        </div>
+        <div class="flight-route">
+          <div class="flight-point">
+            <div class="flight-code">TPE</div>
+            <div class="flight-time">23:45</div>
+            <div class="flight-terminal">2/19 (Thu)</div>
+          </div>
+          <div class="flight-arrow">
+            <div class="flight-arrow-line"></div>
+            <span>9h 20m</span>
+          </div>
+          <div class="flight-point">
+            <div class="flight-code">MEL</div>
+            <div class="flight-time">12:05 <span class="flight-next-day">+1天</span></div>
+            <div class="flight-terminal">2/20 (Fri)</div>
+          </div>
+        </div>
+        <div class="flight-details">
+          <span><strong>航空</strong> 中華航空</span>
+          <span><strong>航班</strong> CI 57</span>
+          <span><strong>出發</strong> 2/19 (Thu) 23:45</span>
+          <span><strong>抵達</strong> 2/20 (Fri) 12:05</span>
+        </div>
+      </div>
+
+      <div class="note">
+        🚗 格上機場接送（去程）：2/19 (Thu) 21:15 到府接送<br>
+        訂單編號：<code class="copy-code" onclick="copyCode(this)" title="點擊複製">202601032629</code>
+        ｜<a href="https://s.car-plus.com.tw/s/hQNV" target="_blank">查詢訂單狀態 ↗</a><br>
+        <small>駕駛資訊前一天 18:00-20:00 提供｜LINE 官方帳號：@airgo</small>
+      </div>
+
+      <div class="ipc-card">
+        <div class="ipc-card-header">
+          📋 澳洲入境卡 填寫範例
+          <small>Incoming Passenger Card — 空服員降落前 1-2 小時發，用黑/藍筆英文大寫填寫</small>
+        </div>
+
+        <h4>A 面 — 基本資料（照護照英文頁填）</h4>
+        <div class="ipc-grid">
+          <div><div class="ipc-field-label">Family Name 姓</div><div class="ipc-field-value">SHIH</div></div>
+          <div><div class="ipc-field-label">Given Names 名</div><div class="ipc-field-value">AN HUNG</div></div>
+          <div><div class="ipc-field-label">Passport No. 護照號碼</div><div class="ipc-field-value placeholder">依護照填寫</div></div>
+          <div><div class="ipc-field-label">Flight No. 航班號碼</div><div class="ipc-field-value">CI 57</div></div>
+          <div class="full"><div class="ipc-field-label">Address in Australia 在澳住址</div><div class="ipc-field-value">MELBOURNE MARRIOTT HOTEL, MELBOURNE VIC 3000</div></div>
+          <div class="full"><div class="ipc-field-label">Intend to live in Australia for 12 months? 打算居住滿 12 個月？</div><div class="ipc-field-value">NO</div></div>
+        </div>
+
+        <h4>B 面 — 旅客資料（非澳洲公民填寫）</h4>
+        <div class="ipc-grid">
+          <div><div class="ipc-field-label">State 主要停留州</div><div class="ipc-field-value">VIC</div></div>
+          <div><div class="ipc-field-label">Departure Date 預計離境</div><div class="ipc-field-value">01/03/2026</div></div>
+          <div><div class="ipc-field-label">One-way ticket? 單程票？</div><div class="ipc-field-value">NO</div></div>
+          <div><div class="ipc-field-label">Nationality 國籍</div><div class="ipc-field-value">TAIWAN (R.O.C.)</div></div>
+          <div><div class="ipc-field-label">Country of Birth 出生國</div><div class="ipc-field-value">TAIWAN</div></div>
+          <div><div class="ipc-field-label">Date of Birth 出生日期</div><div class="ipc-field-value placeholder">DD/MM/YYYY 格式</div></div>
+          <div class="full"><div class="ipc-field-label">Occupation 職業</div><div class="ipc-field-value placeholder">用英文填，如 ENGINEER / TEACHER</div></div>
+        </div>
+
+        <h4>健康與品格聲明（非公民）</h4>
+        <div class="ipc-decl-item"><span>Do you have tuberculosis? 是否患有肺結核？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>Criminal convictions? 是否有犯罪紀錄？</span><span class="ipc-no">NO</span></div>
+
+        <h4>海關申報 — 你們全部勾 NO</h4>
+        <div class="ipc-decl-item"><span>違禁／管制品（藥物、武器等）？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>超過 2,250ml 酒精或 25 支菸？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>海外購物總額超過 AUD $900？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>商業用途貨物／樣品？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>攜帶現金超過 AUD $10,000？</span><span class="ipc-no">NO</span></div>
+        <div class="ipc-decl-item"><span>食物、動植物、種子、土壤？</span><span class="ipc-no">NO</span></div>
+
+        <div class="ipc-person-note">
+          👤 <strong>第二位旅客 WANG YI JU</strong>：內容同上，姓名改為 Family Name: <strong>WANG</strong> / Given Names: <strong>YI JU</strong>，護照號碼、出生日期、職業各填自己的。
+        </div>
+
+        <div class="ipc-tips">
+          <h4>💡 領隊提醒</h4>
+          <ul>
+            <li>每人各填一張，空服員會主動發</li>
+            <li>日期格式是 <strong>DD/MM/YYYY</strong>（日/月/年），不是台灣的 YYYY/MM/DD</li>
+            <li>全部用<strong>英文大寫</strong>＋黑色或藍色原子筆</li>
+            <li>如果臨時多帶了零食或藥品，該欄改勾 YES 就好（誠實申報不會罰）</li>
+            <li>填完夾在護照裡，入境時整本交給海關</li>
+            <li>簽名欄用<strong>護照上的簽名方式</strong>（中文簽名 OK）</li>
+          </ul>
+        </div>
+      </div>
+
       <ul>
-        <li>中午／下午抵達墨爾本</li>
-        <li>入住飯店、放行李</li>
+        <li>12:05 抵達墨爾本（MEL）</li>
+        <li>~13:00 通關＋領行李完成（國際線約需 45-60 分鐘）</li>
+        <li>叫 Uber → Melbourne Marriott Hotel（約 30 分鐘，~AUD $50-60）</li>
+        <li>~13:30 抵達飯店，Check-in、放行李</li>
         <li>附近隨意吃或外帶</li>
       </ul>
-      <div class="note">今天的任務只有「好好抵達」，沒有任何進度壓力。</div>
+      <div class="note">Uber 上車點：MEL 機場各航廈出口均有 Rideshare 指示牌，跟著「Rideshare」標誌走即可。有大行李建議叫 UberX（可放兩個大箱）。</div>
     </div></div>
   </div>
 
@@ -480,17 +808,15 @@
         <div class="day-meta">
           <span class="tag tag-mel">Melbourne</span>
           <span class="tag tag-hotel">Marriott</span>
-          <span class="tag tag-booked">已預訂</span>
-          <span class="tag tag-cost">NTD 5,600</span>
         </div>
       </div>
       <span class="expand-icon">▼</span>
     </div>
     <div class="day-body"><div class="day-content">
       <ul>
-        <li>早上出發（Yarra Valley 為主）</li>
+        <li>早上或中午出發（Yarra Valley）</li>
         <li>酒莊品酒＋午餐</li>
-        <li>下午返回墨爾本</li>
+        <li>下午或傍晚返回墨爾本</li>
         <li>晚上：清淡飲食／早休息</li>
       </ul>
       <h4>為什麼放這天？</h4>
@@ -499,8 +825,7 @@
         <li>前一天是看風景，今天是吃喝</li>
         <li>不會卡到週末觀光團</li>
       </ul>
-      <div class="note">這天放得非常漂亮</div>
-      <p style="margin-top:0.5rem"><a class="link-btn" href="https://www.klook.com/activity/176919-relaxed-half-day-yarra-valley-wine-tour-from-melbourne/" target="_blank">查看已訂行程 (Klook)</a></p>
+      <div class="note">⚠️ 原 Klook 行程已取消，替代方案比較中 → <a href="#compare" style="font-size:0.85rem">查看比較表</a></div>
     </div></div>
   </div>
 
@@ -541,18 +866,70 @@
         <div class="day-meta">
           <span class="tag tag-syd">Sydney</span>
           <span class="tag tag-hotel">Four Seasons</span>
+          <span class="tag tag-booked">已預訂</span>
           <span class="crowd-dot crowd-green" title="人少"></span>
         </div>
       </div>
       <span class="expand-icon">▼</span>
     </div>
     <div class="day-body"><div class="day-content">
+
+      <div class="flight-card">
+        <div class="flight-card-header">
+          <span class="flight-airline">Jetstar JQ512</span>
+          <span class="flight-booking-ref">BSSQRH</span>
+        </div>
+        <div class="flight-route">
+          <div class="flight-point">
+            <div class="flight-code">MEL</div>
+            <div class="flight-time">11:05am</div>
+            <div class="flight-terminal">Terminal 4</div>
+          </div>
+          <div class="flight-arrow">
+            <div class="flight-arrow-line"></div>
+            <span>1h 25m</span>
+          </div>
+          <div class="flight-point">
+            <div class="flight-code">SYD</div>
+            <div class="flight-time">12:30pm</div>
+            <div class="flight-terminal">Domestic T2</div>
+          </div>
+        </div>
+        <div class="flight-details">
+          <span><strong>日期</strong> 2/26 (Thu)</span>
+          <span><strong>機型</strong> A320-200</span>
+          <span><strong>艙等</strong> 經濟艙 基本票</span>
+          <span><strong>線上登機</strong> 2/24 11:05am 開放</span>
+        </div>
+        <div class="flight-pax">
+          <div class="flight-pax-row">
+            <div>
+              <span class="flight-pax-name">SHIH AN HUNG</span>
+              <span class="flight-pax-bags">手提 7kg ＋ 託運 25kg</span>
+            </div>
+            <span class="flight-pax-seat">12B 加長空間</span>
+          </div>
+          <div class="flight-pax-row">
+            <div>
+              <span class="flight-pax-name">WANG YI JU</span>
+              <span class="flight-pax-bags">手提 7kg ＋ 託運 25kg</span>
+            </div>
+            <span class="flight-pax-seat">12A 加長空間</span>
+          </div>
+        </div>
+        <div class="flight-warn">
+          ⚠ 出發前 40 分鐘停止辦理登機手續｜登機閘口出發前 20 分鐘關閉
+        </div>
+      </div>
+
       <ul>
-        <li>早上飛雪梨</li>
-        <li>抵達後進飯店、輕鬆市區</li>
+        <li>08:15 Check-out Marriott，叫 Uber 前往 MEL 機場（約 30 分鐘）</li>
+        <li>09:00 抵達機場 Terminal 4（國內線建議提前 2 小時）</li>
+        <li>11:05 起飛 → 12:30 抵達 SYD Domestic T2</li>
+        <li>~12:50 領完行李，叫 Uber → Four Seasons Hotel（約 15-20 分鐘，~AUD $35-55）</li>
+        <li>~13:15 抵達飯店，Check-in</li>
         <li>下午：魚市場＋港灣散步</li>
       </ul>
-      <div class="note">因為昨天是自由日，今天移動會很輕鬆。</div>
     </div></div>
   </div>
 
@@ -612,25 +989,86 @@
         <div class="day-title">雪梨 → 台北</div>
         <div class="day-date">3/1 (Sun)</div>
         <div class="day-meta">
+          <span class="tag tag-syd">Sydney</span>
+          <span class="tag tag-booked">已預訂</span>
           <span class="crowd-dot crowd-green" title="人少"></span>
         </div>
       </div>
       <span class="expand-icon">▼</span>
     </div>
     <div class="day-body"><div class="day-content">
-      <ul><li>返台</li></ul>
+
+      <div class="flight-card">
+        <div class="flight-card-header">
+          <span class="flight-airline">China Airlines CI 52</span>
+        </div>
+        <div class="flight-route">
+          <div class="flight-point">
+            <div class="flight-code">SYD</div>
+            <div class="flight-time">22:10</div>
+            <div class="flight-terminal">3/1 (Sun)</div>
+          </div>
+          <div class="flight-arrow">
+            <div class="flight-arrow-line"></div>
+            <span>9h 10m</span>
+          </div>
+          <div class="flight-point">
+            <div class="flight-code">TPE</div>
+            <div class="flight-time">04:20 <span class="flight-next-day">+1天</span></div>
+            <div class="flight-terminal">3/2 (Mon)</div>
+          </div>
+        </div>
+        <div class="flight-details">
+          <span><strong>航空</strong> 中華航空</span>
+          <span><strong>航班</strong> CI 52</span>
+          <span><strong>出發</strong> 3/1 (Sun) 22:10</span>
+          <span><strong>抵達</strong> 3/2 (Mon) 04:20</span>
+        </div>
+      </div>
+
+      <ul>
+        <li>白天自由活動、最後採買</li>
+        <li>12:00 前 Check-out，行李寄放飯店 Concierge</li>
+        <li>下午繼續輕鬆逛（Circular Quay / The Rocks 周邊）</li>
+        <li>~18:00 回飯店取行李</li>
+        <li>~18:30 叫 Uber 前往 SYD 機場（約 15-20 分鐘，~AUD $35-55）</li>
+        <li>~19:00 抵達機場（國際線建議提前 3 小時）</li>
+        <li>22:10 搭乘 CI 52 返台</li>
+      </ul>
+      <div class="note">行李寄放：Four Seasons Concierge 免費寄放退房後行李。回來取行李時直接到大廳找 Concierge 即可。</div>
+      <div class="note">晚班機的好處：12:00 退房後行李寄飯店，還有整個下午可以輕鬆逛。18:30 回來取行李出發剛剛好。</div>
+      <div class="note">
+        🚗 格上機場接送（回程）：3/2 (Mon) 04:20 桃園機場接機<br>
+        訂單編號：<code class="copy-code" onclick="copyCode(this)" title="點擊複製">202601032631</code>
+        ｜<a href="https://s.car-plus.com.tw/s/hQNV" target="_blank">查詢訂單狀態 ↗</a><br>
+        <small>駕駛資訊於接送時間前 6 小時提供｜LINE 官方帳號：@airgo</small>
+      </div>
     </div></div>
   </div>
 
   <!-- Day 11 -->
-  <div class="day-card rest">
+  <div class="day-card rest" onclick="toggle(this)">
     <div class="day-header">
       <div>
         <div class="day-num">DAY 11</div>
         <div class="day-title">台灣休息</div>
         <div class="day-date">3/2 (Mon)</div>
       </div>
+      <span class="expand-icon">▼</span>
     </div>
+    <div class="day-body"><div class="day-content">
+      <ul>
+        <li>04:20 抵達桃園機場</li>
+        <li>格上機場接送 → 回家</li>
+        <li>好好休息，旅程結束！</li>
+      </ul>
+      <div class="note">
+        🚗 格上機場接送（回程）：3/2 (Mon) 04:20 桃園機場接機<br>
+        訂單編號：<code class="copy-code" onclick="copyCode(this)" title="點擊複製">202601032631</code>
+        ｜<a href="https://s.car-plus.com.tw/s/hQNV" target="_blank">查詢訂單狀態 ↗</a><br>
+        <small>駕駛資訊於接送時間前 6 小時提供｜LINE 官方帳號：@airgo</small>
+      </div>
+    </div></div>
   </div>
 
   <!-- ===== Day 2 詳細攻略 ===== -->
@@ -940,26 +1378,88 @@
         <thead>
           <tr>
             <th></th>
-            <th class="col-booked">Option 1 <span class="booked-badge">已訂</span></th>
+            <th style="opacity:0.5"><s>Option 1</s> ❌</th>
             <th>Option 2</th>
-            <th>Option 3</th>
+            <th class="col-rec">Option 3 <span class="rec-badge">推薦</span></th>
+            <th>Option 4</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th>平台</th>
-            <td class="col-booked">Klook</td>
+            <td style="opacity:0.5"><s>Klook</s></td>
             <td>Klook</td>
-            <td>—</td>
+            <td class="col-rec">Dancing Kangaroo</td>
+            <td>Dancing Kangaroo</td>
+          </tr>
+          <tr>
+            <th>行程</th>
+            <td style="opacity:0.5"><s>Relaxed Half-Day</s><br><small>已取消</small></td>
+            <td>Small Group Afternoon</td>
+            <td class="col-rec"><strong>Epic 全日遊</strong></td>
+            <td>Relaxed 半日遊</td>
+          </tr>
+          <tr>
+            <th>酒莊數</th>
+            <td style="opacity:0.5">—</td>
+            <td>3 間</td>
+            <td class="col-rec"><span class="check">&#10003;</span> 4 間 + 巧克力</td>
+            <td>3 間</td>
+          </tr>
+          <tr>
+            <th>含午餐</th>
+            <td style="opacity:0.5">—</td>
+            <td><span class="cross">&#10007;</span> 可加購</td>
+            <td class="col-rec"><span class="check">&#10003;</span> 2-course + 酒</td>
+            <td><span class="cross">&#10007;</span> 自費</td>
+          </tr>
+          <tr>
+            <th>小型團<br>(&lt;20人)</th>
+            <td style="opacity:0.5">—</td>
+            <td><span class="check">&#10003;</span> ≤15人</td>
+            <td class="col-rec"><span class="check">&#10003;</span> 6-20人</td>
+            <td><span class="check">&#10003;</span> 6-20人</td>
+          </tr>
+          <tr>
+            <th>時長</th>
+            <td style="opacity:0.5">半日</td>
+            <td>5 小時</td>
+            <td class="col-rec">8.5 小時</td>
+            <td>5.5 小時</td>
+          </tr>
+          <tr>
+            <th>出發時間</th>
+            <td style="opacity:0.5">—</td>
+            <td>12:45</td>
+            <td class="col-rec">08:45</td>
+            <td>11:45</td>
+          </tr>
+          <tr>
+            <th>評價</th>
+            <td style="opacity:0.5">—</td>
+            <td>⭐ 4.6星<br><small>5 則評價</small></td>
+            <td class="col-rec">⭐ 5星<br><small>956 則評價</small></td>
+            <td>⭐ 5星</td>
+          </tr>
+          <tr>
+            <th>價格</th>
+            <td style="opacity:0.5"><s>NTD 5,600</s></td>
+            <td><strong>NTD 3,000</strong></td>
+            <td class="col-rec"><strong>AUD $190-210/人</strong></td>
+            <td><strong>AUD $130-155/人</strong></td>
           </tr>
           <tr>
             <th>連結</th>
-            <td class="col-booked"><a href="https://www.klook.com/activity/176919-relaxed-half-day-yarra-valley-wine-tour-from-melbourne/" target="_blank" class="link-btn">查看</a></td>
+            <td style="opacity:0.5"><s>Klook</s></td>
             <td><a href="https://www.klook.com/activity/141469-yarra-valley-afternoon-winery-tour/" target="_blank" class="link-btn">查看</a></td>
-            <td>—</td>
+            <td class="col-rec"><a href="https://www.dancingkangarootours.com.au/yarra-valley-wine-tours/" target="_blank" class="link-btn">官網</a></td>
+            <td><a href="https://www.dancingkangarootours.com.au/yarra-valley-wine-tours/" target="_blank" class="link-btn">官網</a></td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="sub-note" style="margin-top:0.5rem">
+      集合點：Arts Centre Melbourne Spire（離 Marriott 步行約 10 分鐘）｜兩個方案都有週二出團
     </div>
   </div>
 
@@ -972,7 +1472,7 @@
     </div>
     <div class="cost-row">
       <span>Day 5 — 酒莊品酒 (Yarra Valley)</span>
-      <span><strong>NTD 5,600</strong></span>
+      <span><strong style="color: var(--text-light)">待選擇</strong><br><span style="font-size:0.8rem;color:var(--text-light)">AUD $130-210/人</span></span>
     </div>
     <div class="cost-row">
       <span>Day 6 — 大洋路一日遊</span>
@@ -980,7 +1480,7 @@
     </div>
     <div class="cost-row cost-total">
       <span>已知行程費用合計</span>
-      <span>NTD 17,031</span>
+      <span>NTD 11,431 + 酒莊待定</span>
     </div>
     <p class="sub-note" style="margin-top:0.5rem">* 不含機票、飯店、餐飲、交通等其他費用</p>
   </div>
@@ -1014,6 +1514,17 @@
 <script>
 function toggle(card) {
   card.classList.toggle('open');
+}
+function copyCode(el) {
+  navigator.clipboard.writeText(el.textContent).then(function() {
+    el.classList.add('copied');
+    var orig = el.title;
+    el.title = '已複製！';
+    setTimeout(function() {
+      el.classList.remove('copied');
+      el.title = orig;
+    }, 1500);
+  });
 }
 // back to top button
 window.addEventListener('scroll', function() {
