@@ -38,6 +38,8 @@
     color: white;
     padding: 2rem 1rem 1.5rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
   .hero h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
   .hero p { opacity: 0.9; font-size: 0.9rem; }
@@ -572,11 +574,56 @@
     .ipc-grid { grid-template-columns: 1fr; }
     .ipc-grid .full { grid-column: auto; }
   }
+  /* Celebration styles */
+  .confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .completion-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid #f59e0b;
+    border-radius: 24px;
+    padding: 0.3rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    backdrop-filter: blur(4px);
+    animation: badgeFadeIn 0.8s ease-out 0.3s both;
+  }
+  .completion-badge .badge-icon {
+    color: #fbbf24;
+    font-size: 1rem;
+  }
+  @keyframes badgeFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #f59e0b, #fbbf24, #f59e0b, transparent);
+  }
 </style>
 </head>
 <body>
 
 <div class="hero" id="top">
+  <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+  <div class="completion-badge">
+    <span class="badge-icon">&#10004;</span> 旅程圓滿完成！
+  </div>
   <h1>Australia 2026</h1>
   <p>Melbourne + Sydney 11 天行程</p>
   <div class="dates">2/20 (Fri) — 3/2 (Mon)</div>
@@ -1657,6 +1704,61 @@ function copyCode(el) {
 window.addEventListener('scroll', function() {
   document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
 });
+// confetti celebration
+(function() {
+  var canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var hero = canvas.parentElement;
+  canvas.width = hero.offsetWidth;
+  canvas.height = hero.offsetHeight;
+  var colors = ['#f59e0b','#fbbf24','#22c55e','#3b82f6','#ef4444','#a855f7','#ffffff'];
+  var particles = [];
+  for (var i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      size: 3 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      dy: 1 + Math.random() * 2,
+      dx: (Math.random() - 0.5) * 2,
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.1,
+      isCircle: Math.random() > 0.5
+    });
+  }
+  var frame = 0, maxFrames = 180;
+  function animate() {
+    if (frame >= maxFrames) {
+      canvas.parentElement.removeChild(canvas);
+      return;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var alpha = frame > maxFrames * 0.7 ? 1 - (frame - maxFrames * 0.7) / (maxFrames * 0.3) : 1;
+    ctx.globalAlpha = alpha;
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.dx + Math.sin(frame * 0.05 + i) * 0.3;
+      p.y += p.dy;
+      p.rot += p.rotSpeed;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      if (p.isCircle) {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      }
+      ctx.restore();
+    }
+    frame++;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
 </script>
 </body>
 </html>
